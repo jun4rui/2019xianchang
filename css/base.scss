@@ -1,0 +1,132 @@
+/*公用样式*/
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+  font-family: "Microsoft YaHei", Helvetica, Arial, sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  border: 0;
+}
+
+.clear {
+  clear: both;
+}
+
+.clear:after {
+  content: "";
+  clear: both;
+  display: block;
+}
+
+.hide {
+  display: none !important;
+}
+
+ul, li {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+/*浮动*/
+.pull-left {
+  float: left;
+}
+
+.pull-right {
+  float: right;
+}
+
+/*定位*/
+.rela {
+  position: relative;
+}
+
+.abs {
+  position: absolute;
+}
+
+.fixed {
+  position: fixed;
+}
+
+/*居中*/
+.center {
+  text-align: center;
+  margin: 0 auto;
+}
+
+@mixin center() {
+  text-align: center;
+  margin: 0 auto;
+}
+
+/*分割*/
+.split {
+  li {
+    display: inline;
+
+    &:after {
+      content: '|';
+      padding: 0 .5em;
+    }
+
+    &:last-child:after {
+      content: '';
+    }
+  }
+}
+
+/*文本对齐*/
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+//表单中的必填项目
+.must:after {
+  content:'*';
+  color:red;
+}
+
+//定制按钮
+.cbtn {
+  border: 0;
+  cursor: pointer;
+  width: 154px;
+  height: 36px;
+  line-height: 36px;
+  display: inline-block;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: #FFF;
+  background-color: #CCC;
+  transition: filter 0.3s ease-out;
+
+  &:hover {
+    filter: brightness(80%);
+  }
+
+  &.cbtn-primary {
+    background-color: #67BFF1;
+  }
+
+  &.cbtn-warning {
+    background-color: #FEA044;
+  }
+}

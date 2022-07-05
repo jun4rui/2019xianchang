@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="zh_CN">
+<head>
+	<meta charset="UTF-8">
+	<meta content="webkit|ie-comp|ie-stand" name="renderer">
+	<meta content="width=1280, user-scalable=yes" name="viewport">
+	<meta content="ie=edge" http-equiv="X-UA-Compatible">
+	<title>湖南人才网:现场招聘 - 企业报名</title>
+	<script src="node_modules/requirejs/require.js"></script>
+	<script src="jslib/require.config.js"></script>
+	<link href="css/index.css" rel="stylesheet">
+	<script src="jslib/common.js"></script>
+	<script src="jslib/selectivizr-min.js"></script>
+	<script>
+		function getDayStr(inDateStr, inMode) {
+			var _weekStr = "周日,周一,周二,周三,周四,周五,周六";
+			if (parseInt(inMode) === 2) {
+				_weekStr = "星期天,星期一,星期二,星期三,星期四,星期五,星期六";
+			}
+			return _weekStr.split(',')[new Date(inDateStr).getDay()];
+		}
+	</script>
+</head>
+<body>
+<!--Banner区-->
+<div id="banner"></div>
+<!--~Banner区-->
+<!--企业报名-->
+<style>
+	#signup .left {
+		width: 900px;
+		font-size: 16px;
+		line-height: 37px;
+		text-indent: 2em;
+	}
+
+	#signup .left p {
+		margin: 0;
+	}
+
+	#signup .right {
+		width: 251px;
+		color: #2C2C2C;
+		font-size: 14px;
+		line-height: 1.5;
+	}
+
+	#signup .right span {
+		color: #999;
+		display: block;
+	}
+
+	#signup-panel {
+		width: 860px;
+		height: 534px;
+		border: 1px solid #EFEFEF;
+	}
+
+	#signup-panel table {
+		margin: 60px auto 0;
+		color: #666;
+	}
+
+	#signup-panel table tr > td:first-child {
+		text-align: right;
+	}
+
+	#signup-panel table #meeting {
+		max-width: 500px;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+	}
+
+	#signup-panel table input[type=text],
+	#signup-panel table select,
+	#signup-panel table textarea {
+		height: 30px;
+		border: 1px solid #CFCFCF;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		padding: 0 .5em;
+		line-height: 30px;
+		color: #333;
+	}
+
+	#signup-panel table input[type=text] {
+		width: 372px;
+	}
+
+	#signup-panel table textarea {
+		width: 500px;
+		height: 140px;
+	}
+</style>
+<div class="widget" id="signup" style="margin-top: 30px;">
+	<div class="title">
+		<span>企业报名</span>
+	</div>
+	<div class="content clear">
+		<div class="left pull-left">
+			<div id="signup-panel">
+				<table>
+					<tr>
+						<td>请选择招聘会场次</td>
+						<td>
+							<select id="meeting" name="meeting">
+								<!--ko foreach: data-->
+								<option data-bind="attr:{value:confTitleId+','+confDate}" value="">
+									<!--ko text: confDate.split('-')[1]+'月'+confDate.split('-')[2]+'日'+getDayStr(confDate,1)+' '+confTitle.replace(/（点击查看详细招聘信息）/,'')-->
+									<!--/ko--></option>
+								<!--/ko-->
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td class="must">企业名称</td>
+						<td>
+							<input id="company-name" name="company-name" type="text">
+						</td>
+					</tr>
+					<tr>
+						<td class="must">联系人</td>
+						<td>
+							<input id="link-man" name="link-man" type="text">
+						</td>
+					</tr>
+					<tr>
+						<td class="must">联系电话</td>
+						<td>
+							<input id="mobilephone" name="mobilephone" type="text">
+						</td>
+					</tr>
+					<tr>
+						<td class="must">联系邮箱</td>
+						<td>
+							<input id="email" name="email" type="text">
+						</td>
+					</tr>
+					<tr>
+						<td valign="top">备注信息</td>
+						<td>
+							<textarea id="remark" name="remark"></textarea>
+						</td>
+					</tr>
+					<tr>
+						<td class="must">验证码</td>
+						<td>
+							<input id="yzcode" name="yzcode" style="width:6em;" type="text">
+							<img alt="yzcode" src="http://www.hnrcsc.com/api/enroll/getValidateCode"
+								 style="display: inline; margin: -6px 0; cursor:pointer;" onclick="this.src='http://www.hnrcsc.com/api/enroll/getValidateCode?v='+Math.random();"></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>
+							<button class="cbtn cbtn-warning" id="cbtn-submit" type="button">在线订展</button>
+							&nbsp;&nbsp;电话咨询、订展电话0731-85063729
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class="right pull-right">
+			<img alt="中国湖南人才市场" src="./images/logo.jpg">
+			<br>
+			<span>企业招聘服务热线：</span>
+			0731-85063729<br>
+			<br>
+			<span>地址：</span>
+			长沙市雨花区湘府中路168号4楼
+		</div>
+	</div>
+</div>
+<!--~企业报名-->
+
+<script>
+	var _PAGE_INDEX = 2;
+	requirejs(['jquery', 'knockout'], function ($, ko) {
+		addHeader();
+		addFooter();
+		addAssistant();
+		$.post(_SERVER + '/listCompany/localSite', function (response) {
+			console.log(response);
+			if (response.errCode === '00') {
+				ko.applyBindings(response);
+			}
+		});
+
+		$('#cbtn-submit').click(function () {
+
+			// 构造参数
+			var _params = {
+				"confTitleId": $('#meeting').val(),
+				"yzcode":      $('#yzcode').val(),
+				"companyName": $('#company-name').val(),
+				"linkman":     $('#link-man').val(),
+				"mobilephone": $('#mobilephone').val(),
+				"email":       $('#email').val(),
+				"remark":      $('#remark').val()
+			};
+
+			// 检查表单
+			var _errMsg = "";
+			if ('' + _params.confTitleId === '')
+				_errMsg += '请选择一场招聘会\n';
+			if (_params.companyName === '')
+				_errMsg += '请填写企业名称\n';
+			if (_params.linkman === '')
+				_errMsg += '请填写联系人称呼\n';
+			if (_params.mobilephone === '')
+				_errMsg += '请填写联系电话\n';
+			if (_params.email === '')
+				_errMsg += '请填写电子邮件\n';
+			if (_params.yzcode === '')
+				_errMsg += '请填写验证码\n';
+			if (_errMsg !== "") {
+				alert("错误！\n" + _errMsg);
+				return false;
+			}
+
+			// 提交表单
+			// 结果输出
+			$.post(_SERVER + '/enroll/companyEnroll', _params, function (response) {
+				if (response.errCode === '00') {
+					alert("提交成功，请保持电话畅通，我们的工作人员将尽快联系您。");
+					window.location.href = 'signup.html';
+				} else {
+					alert("提交错误，请您稍后再次尝试。如果多次尝试不成功，请您联系我们的工作人员。");
+				}
+			});
+
+		});
+	});
+</script>
+</body>
+</html>

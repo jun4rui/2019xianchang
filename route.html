@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="zh_CN">
+<head>
+  <meta charset="UTF-8">
+  <meta content="webkit|ie-comp|ie-stand" name="renderer">
+  <meta content="width=1280, user-scalable=yes" name="viewport">
+  <meta content="ie=edge" http-equiv="X-UA-Compatible">
+  <title>湖南人才网:现场招聘 - 前往交通</title>
+  <script src="node_modules/requirejs/require.js"></script>
+  <script src="jslib/require.config.js"></script>
+  <link href="css/index.css" rel="stylesheet">
+  <script src="jslib/common.js"></script>
+  <script src="jslib/selectivizr-min.js"></script>
+  <style>
+	  .my-map { height: 415px; margin: 0 auto; width: 810px; }
+
+	  /*.my-map .icon { background: url(http://lbs.amap.com/console/public/show/marker.png) no-repeat; }*/
+	  .my-map .icon {
+		  background:          url(./images/marker.png) no-repeat;
+		  background-position: center center !important;
+		  background-size:     contain;
+	  }
+
+	  .my-map .icon-cir { height: 31px; width: 28px; }
+
+	  .my-map .icon-cir-red { background-position: -11px -5px; }
+
+	  .amap-container {height: 100%;}
+  </style>
+</head>
+<body>
+<!--Banner区-->
+<div id="banner"></div>
+<!--~Banner区-->
+<!--前往交通-->
+<div class="widget" id="route" style="margin-top:20px;">
+  <div class="title">
+    <span>前往交通</span>
+  </div>
+  <div class="content clear">
+    <div class="pull-left" id="map">
+      <div class="title">地图名片</div>
+      <div class="my-map" id="wrap">
+        <div id="mapContainer"></div>
+      </div>
+    </div>
+    <div class="pull-right" id="route-text">
+      湖南人才市场位于湘府中路，附近商圈云集，交通便利。主要乘车路线有：<br>
+      1、高铁：长沙火车南站乘坐8/16/66/124/135路到圭塘站转乘26路到万芙路口站下，往东70米到湖南人才市场站；<br>
+      2、地铁：地铁1号线坐至省政府清风站（4号出口）往东1.9千米；<br>
+      3、城轨：湘府路站转公交938路至湖南人才市场站，过马路往西200米；<br>
+      4、汽车：汽车南站外万芙路中意路口站乘坐15路公交车到湖南人才市场站下车即到；<br>
+      5、公交：16/26/805/938路至湖南人才市场站，过马路往西200米；15/115/388路至湖南人才市场站下车即到。
+    </div>
+  </div>
+</div>
+<script src="//webapi.amap.com/maps?v=1.3&key=8325164e247e15eea68b59e89200988b"></script>
+<script>
+  // 设置高德地图模块
+  !function() {
+    var infoWindow, map, level = 17,
+        center                 = {lng: 113.00231, lat: 28.113579},
+        features               = [
+          {
+            type: 'Marker',
+            name: '湖南人才市场',
+            desc: '1、高铁：长沙火车南站乘坐8/16/66/124/135路到圭塘站转乘26路到万芙路口站下，往东70米到湖南人才市场站\\n2、地铁：地铁1号线坐至省政府清风站（4号出口）往东1.9千米；\\n3、城轨：湘府路站转公交938路至湖南人才市场站，过马路往西200米；\\n4、汽车：汽车南站外万芙路中意路口站乘坐15路公交车到湖南人才市场站下车即到；\\n5、公交：16/26/805/938路至湖南人才市场站，过马路往西200米；15/115/388路至湖南人才市场站下车即到。',
+            color: 'red',
+            icon: 'cir',
+            offset: {x: -9, y: -31},
+            lnglat: {lng: 113.00231, lat: 28.113579}
+          }];
+
+    function loadFeatures() {
+      for (var feature, data, i = 0, len = features.length, j, jl, path; i < len; i++) {
+        data = features[i];
+        switch (data.type) {
+          case 'Marker':
+            feature = new AMap.Marker({
+              map:     map, position: new AMap.LngLat(data.lnglat.lng, data.lnglat.lat),
+              zIndex:  3, extData: data, offset: new AMap.Pixel(data.offset.x, data.offset.y), title: data.name,
+              content: '<div class="icon icon-' + data.icon + ' icon-' + data.icon + '-' + data.color + '"></div>'
+            });
+            break;
+          case 'Polyline':
+            for (j = 0, jl = data.lnglat.length, path = []; j < jl; j++) {
+              path.push(new AMap.LngLat(data.lnglat[j].lng, data.lnglat[j].lat));
+            }
+            feature = new AMap.Polyline({
+              map:          map, path: path, extData: data, zIndex: 2,
+              strokeWeight: data.strokeWeight, strokeColor: data.strokeColor, strokeOpacity: data.strokeOpacity
+            });
+            break;
+          case 'Polygon':
+            for (j = 0, jl = data.lnglat.length, path = []; j < jl; j++) {
+              path.push(new AMap.LngLat(data.lnglat[j].lng, data.lnglat[j].lat));
+            }
+            feature = new AMap.Polygon({
+              map:          map, path: path, extData: data, zIndex: 1,
+              strokeWeight: data.strokeWeight, strokeColor: data.strokeColor, strokeOpacity: data.strokeOpacity,
+              fillColor:    data.fillColor, fillOpacity: data.fillOpacity
+            });
+            break;
+          default:
+            feature = null;
+        }
+        if (feature) { AMap.event.addListener(feature, 'click', mapFeatureClick); }
+      }
+    }
+
+    function mapFeatureClick(e) {
+      if (!infoWindow) { infoWindow = new AMap.InfoWindow({autoMove: true}); }
+      var extData = e.target.getExtData();
+      infoWindow.setContent('<h5>' + extData.name + '</h5><div>' + extData.desc + '</div>');
+      infoWindow.open(map, e.lnglat);
+    }
+
+    map = new AMap.Map('mapContainer', {center: new AMap.LngLat(center.lng, center.lat), level: level});
+
+    loadFeatures();
+
+    map.on('complete', function() {
+      map.plugin(['AMap.ToolBar', 'AMap.OverView', 'AMap.Scale'], function() {
+        map.addControl(new AMap.ToolBar);
+        map.addControl(new AMap.OverView({isOpen: true}));
+        map.addControl(new AMap.Scale);
+      });
+    });
+
+  }();
+</script>
+<!--~前往交通-->
+<script>
+  var _PAGE_INDEX = 3;
+  requirejs(['jquery', 'knockout'], function($, ko) {
+    addHeader();
+    addFooter();
+    addAssistant();
+
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<link rel="stylesheet" href="css/header.css">
+
+<!--Header区域-->
+<div id="header-panel">
+    <!--登录注册链接-->
+    <div id="login-panel">
+        <!--注册登录容器-->
+        <ul class="content">
+            <li>
+                <a href="https://qz.hnrcsc.com/pweb/#/login">个人登录</a>
+            </li>
+            <li>
+                <a href="https://qz.hnrcsc.com/pweb/#/login?register=1">企业登录</a>
+            </li>
+            <li>
+                <a href="https://qz.hnrcsc.com/pweb/#/login?register=0">注册</a>
+            </li>
+        </ul>
+        <!--~注册登录容器-->
+    </div>
+    <!--~登录注册链接-->
+    <!--标题LOGO-->
+    <div id="logo-panel">
+        <!--标题LOGO容器-->
+        <div class="content rela">
+            <a href="//www.hnrcsc.com" class="abs" title="湖南人才市场"></a>
+            <div class="title abs">现场招聘</div>
+            <ul class="nav-panel abs clear">
+                <li>
+                    <a href="index.html">首页</a>
+                </li>
+                <li>
+                    <a href="intro.html">市场介绍</a>
+                </li>
+                <li>
+                    <a href="signup.html">企业报名</a>
+                </li>
+                <li>
+                    <a href="route.html">前往交通</a>
+                </li>
+            </ul>
+        </div>
+        <!--~标题LOGO容器-->
+    </div>
+    <!--~标题LOGO-->
+</div>
+<script>
+    if (typeof(_PAGE_INDEX)==='number'){
+        $('.nav-panel li').eq(_PAGE_INDEX).addClass('active');
+    }
+</script>
+<!--~Header区域-->

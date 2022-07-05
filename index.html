@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="zh_CN">
+<head>
+  <meta charset="UTF-8">
+  <meta content="webkit|ie-comp|ie-stand" name="renderer">
+  <meta content="width=1280, user-scalable=yes" name="viewport">
+  <meta content="ie=edge" http-equiv="X-UA-Compatible">
+  <title>湖南人才网:现场招聘 - 首页</title>
+  <script src="node_modules/requirejs/require.js"></script>
+  <script src="jslib/require.config.js"></script>
+  <link href="css/index.css" rel="stylesheet">
+  <script src="jslib/common.js"></script>
+  <script src="jslib/selectivizr-min.js"></script>
+  <script>
+    <!--20210831-暂时隐藏现场招聘会页面-->
+    //window.location.href = 'http://www.hnrcsc.com/html/202108/49151.html';
+  </script>
+  <style>
+	  .my-map { height: 415px; margin: 0 auto; width: 810px; }
+
+	  /*.my-map .icon { background: url(http://lbs.amap.com/console/public/show/marker.png) no-repeat; }*/
+	  .my-map .icon {
+        background: url(./images/marker.png) no-repeat;
+        background-size: contain;
+        background-position: center center !important;
+    }
+
+	  .my-map .icon-cir { height: 31px; width: 28px; }
+
+	  .my-map .icon-cir-red { background-position: -11px -5px; }
+
+	  .amap-container {height: 100%;}
+  </style>
+  <script>
+    function getDayStr(inDateStr, inMode) {
+      var _weekStr = '周日,周一,周二,周三,周四,周五,周六';
+      if (parseInt(inMode) === 2) {
+        _weekStr = '星期天,星期一,星期二,星期三,星期四,星期五,星期六';
+      }
+      return _weekStr.split(',')[new Date(inDateStr).getDay()];
+    }
+  </script>
+</head>
+<body>
+<!--Banner区-->
+<div id="banner">
+</div>
+<!--~Banner区-->
+<!--当前招聘会-->
+<div id="current-meeting">
+  <div class="panel rela">
+    <div class="abs new"></div>
+    <!--日历部分-->
+    <div class="calendar abs">
+      <div class="month"><!-- ko text: parseInt(data[0].confDate.split('-')[1]) --><!-- /ko -->月</div>
+      <div class="date">
+        <!-- ko text: parseInt(data[0].confDate.split('-')[2]) --><!-- /ko -->
+        <span>
+					<!-- ko text: getDayStr(data[0].confDate,2) --><!-- /ko -->
+				</span>
+      </div>
+    </div>
+    <!--信息部分-->
+    <div class="info abs">
+      <a class="title" data-bind="attr:{href:'http://www.hnrcsc.com/web/seekjob/meeting-detail!meetinglist.action?recruit_date='+data[0].confDate+'&mallCode='+data[0].mallCode}" href="#" target="_blank">
+        <!-- ko text: data[0].confTitle.replace(/（点击查看详细招聘信息）/,'') --><!-- /ko --></a>
+      主办单位：<!-- ko text: data[0].confHost?data[0].confHost:'中国湖南人才市场' --><!-- /ko --><br>
+      承办单位：<!-- ko text: data[0].confUndertake?data[0].confUndertake:'湖南人才市场有限公司' --><!-- /ko --><br>
+      招聘会地址：<!-- ko text: data[0].confAddress?data[0].confAddress:'中国湖南人才市场（长沙市湘府中路168号）' --><!-- /ko -->
+    </div>
+    <!--按钮部分-->
+    <div class="button-panel abs">
+      <a class="cbtn cbtn-primary" data-bind="attr:{href:'http://www.hnrcsc.com/web/seekjob/meeting-detail!meetinglist.action?recruit_date='+data[0].confDate+'&mallCode='+data[0].mallCode}" href="#" target="_blank">参会企业详情</a>
+      <a class="cbtn cbtn-warning" href="signup.html" target="_blank">在线定展</a>
+    </div>
+  </div>
+</div>
+<!--~当前招聘会-->
+<!--招聘会列表-->
+<div class="rela" id="meeting-list">
+  <div class="abs new2"></div>
+  <table>
+    <tr>
+      <th>招聘会主题</th>
+      <th>时间</th>
+      <th>地址</th>
+      <th>状态</th>
+    </tr>
+    <!-- ko foreach: list -->
+    <tr>
+      <td>
+        <a data-bind="text:$data.confTitle.replace(/（点击查看详细招聘信息）/,''), attr:{title:$data.confTitle.replace(/（点击查看详细招聘信息）/,''),href:'http://www.hnrcsc.com/web/seekjob/meeting-detail!meetinglist.action?recruit_date='+$data.confDate+'&mallCode='+$data.mallCode}" href="#" target="_blank"></a>
+      </td>
+      <td>
+        <!-- ko text: parseInt($data.confDate.split('-')[1])+'月'+parseInt($data.confDate.split('-')[2])+'日' -->
+        <!-- /ko -->
+        <span><!-- ko text: "（"+getDayStr($data.confDate,1)+"）" --><!-- /ko --></span>
+      </td>
+      <td>中国湖南人才市场</td>
+      <td>
+        <a class="cbtn cbtn-primary" data-bind="attr:{href:'http://www.hnrcsc.com/web/seekjob/meeting-detail!meetinglist.action?recruit_date='+$data.confDate+'&mallCode='+$data.mallCode}" href="#" target="_blank">参会企业详情</a>
+        <a class="cbtn cbtn-warning" href="signup.html" target="_blank">在线定展</a>
+      </td>
+    </tr>
+    <!-- /ko -->
+  </table>
+</div>
+<!--~招聘会列表-->
+<a href="http://www.hnrcsc.com/html/2020msb/" style="display: block; margin: 20px auto 0 auto; width: 1200px;" target="_blank"><img src="images/mianshibao.jpg"></a>
+<!--往期回顾-->
+<div class="widget" id="history">
+  <div class="title">
+    <span>往期回顾</span>
+  </div>
+  <div class="content">
+    <ul class="clear">
+      <li class="pull-left">
+        <img alt="" src="images/history1.png">
+      </li>
+      <li class="pull-left">
+        <img alt="" src="images/history2.png">
+      </li>
+      <li class="pull-left">
+        <img alt="" src="images/history3.png">
+      </li>
+      <li class="pull-left">
+        <img alt="" src="images/history4.png">
+      </li>
+      <li class="pull-left">
+        <img alt="" src="images/history5.png">
+      </li>
+      <li class="pull-left">
+        <img alt="" src="images/history6.png">
+      </li>
+      <li class="pull-left">
+        <img alt="" src="images/history7.png">
+      </li>
+      <li class="pull-left">
+        <img alt="" src="images/history8.png">
+      </li>
+    </ul>
+  </div>
+</div>
+<!--~往期回顾-->
+<!--乘车路线-->
+<div class="widget" id="route">
+  <div class="title">
+    <span>乘车路线</span>
+  </div>
+  <div class="content clear">
+    <div class="pull-left" id="map">
+      <div class="title">地图名片</div>
+      <div class="my-map" id="wrap">
+        <div id="mapContainer"></div>
+      </div>
+    </div>
+    <div class="pull-right" id="route-text">
+      湖南人才市场位于湘府中路，附近商圈云集，交通便利。主要乘车路线有：<br>
+      1、高铁：长沙火车南站乘坐8/16/66/124/135路到圭塘站转乘26路到万芙路口站下，往东70米到湖南人才市场站；<br>
+      2、地铁：地铁1号线坐至省政府清风站（4号出口）往东1.9千米；<br>
+      3、城轨：湘府路站转公交938路至湖南人才市场站，过马路往西200米；<br>
+      4、汽车：汽车南站外万芙路中意路口站乘坐15路公交车到湖南人才市场站下车即到；<br>
+      5、公交：16/26/805/938路至湖南人才市场站，过马路往西200米；15/115/388路至湖南人才市场站下车即到。
+    </div>
+  </div>
+</div>
+<script src="//webapi.amap.com/maps?v=1.3&key=8325164e247e15eea68b59e89200988b"></script>
+<script>
+  // 设置高德地图模块
+  !function() {
+    var infoWindow, map, level = 17,
+        center                 = {lng: 113.00231, lat: 28.113579},
+        features               = [
+          {
+            type:   'Marker',
+            name:   '湖南人才市场',
+            desc:   '1、高铁：长沙火车南站乘坐8/16/66/124/135路到圭塘站转乘26路到万芙路口站下，往东70米到湖南人才市场站\\n2、地铁：地铁1号线坐至省政府清风站（4号出口）往东1.9千米；\\n3、城轨：湘府路站转公交938路至湖南人才市场站，过马路往西200米；\\n4、汽车：汽车南站外万芙路中意路口站乘坐15路公交车到湖南人才市场站下车即到；\\n5、公交：16/26/805/938路至湖南人才市场站，过马路往西200米；15/115/388路至湖南人才市场站下车即到。',
+            color:  'red',
+            icon:   'cir',
+            offset: {x: -9, y: -31},
+            lnglat: {lng: 113.00231, lat: 28.113579}
+          }];
+
+    function loadFeatures() {
+      for (var feature, data, i = 0, len = features.length, j, jl, path; i < len; i++) {
+        data = features[i];
+        switch (data.type) {
+          case 'Marker':
+            feature = new AMap.Marker({
+              map:     map, position: new AMap.LngLat(data.lnglat.lng, data.lnglat.lat),
+              zIndex:  3, extData: data, offset: new AMap.Pixel(data.offset.x, data.offset.y), title: data.name,
+              content: '<div class="icon icon-' + data.icon + ' icon-' + data.icon + '-' + data.color + '"></div>'
+            });
+            break;
+          case 'Polyline':
+            for (j = 0, jl = data.lnglat.length, path = []; j < jl; j++) {
+              path.push(new AMap.LngLat(data.lnglat[j].lng, data.lnglat[j].lat));
+            }
+            feature = new AMap.Polyline({
+              map:          map, path: path, extData: data, zIndex: 2,
+              strokeWeight: data.strokeWeight, strokeColor: data.strokeColor, strokeOpacity: data.strokeOpacity
+            });
+            break;
+          case 'Polygon':
+            for (j = 0, jl = data.lnglat.length, path = []; j < jl; j++) {
+              path.push(new AMap.LngLat(data.lnglat[j].lng, data.lnglat[j].lat));
+            }
+            feature = new AMap.Polygon({
+              map:          map, path: path, extData: data, zIndex: 1,
+              strokeWeight: data.strokeWeight, strokeColor: data.strokeColor, strokeOpacity: data.strokeOpacity,
+              fillColor:    data.fillColor, fillOpacity: data.fillOpacity
+            });
+            break;
+          default:
+            feature = null;
+        }
+        if (feature) { AMap.event.addListener(feature, 'click', mapFeatureClick); }
+      }
+    }
+
+    function mapFeatureClick(e) {
+      if (!infoWindow) { infoWindow = new AMap.InfoWindow({autoMove: true}); }
+      var extData = e.target.getExtData();
+      infoWindow.setContent('<h5>' + extData.name + '</h5><div>' + extData.desc + '</div>');
+      infoWindow.open(map, e.lnglat);
+    }
+
+    map = new AMap.Map('mapContainer', {center: new AMap.LngLat(center.lng, center.lat), level: level});
+
+    loadFeatures();
+
+    map.on('complete', function() {
+      map.plugin(['AMap.ToolBar', 'AMap.OverView', 'AMap.Scale'], function() {
+        map.addControl(new AMap.ToolBar);
+        map.addControl(new AMap.OverView({isOpen: true}));
+        map.addControl(new AMap.Scale);
+      });
+    });
+
+  }();
+</script>
+<!--~乘车路线-->
+<script>
+  var _PAGE_INDEX = 0;
+  requirejs(['jquery', 'knockout'], function($, ko) {
+    addHeader();
+    addFooter();
+    addAssistant();
+
+    $.post(_SERVER + '/listCompany/localSite', function(response) {
+      if (response.errCode === '00') {
+        response.list = response.data.splice(1);
+        ko.applyBindings(response);
+      }
+    });
+  });
+</script>
+</body>
+</html>

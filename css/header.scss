@@ -1,0 +1,92 @@
+$color1: #FFF;
+$color2: #0B98D0;
+$color3: #999;
+
+
+//Header区域
+#header-panel {
+  width: 100%;
+  background-color: $color1;
+}
+
+#header-panel #login-panel {
+  background-color: $color2;
+  width: 100%;
+  height: 36px;
+}
+
+#header-panel #login-panel > .content {
+  width: 1140px;
+  margin: 0 auto;
+  text-align: right;
+}
+
+#header-panel #login-panel > .content li {
+  display: inline;
+  margin-left: 1em;
+}
+
+#header-panel #login-panel > .content li a {
+  font-size: 16px;
+  color: $color1;
+  line-height: 36px;
+}
+
+#header-panel #logo-panel {
+  width: 100%;
+}
+
+#header-panel #logo-panel .content {
+  width: 1140px;
+  height: 84px;
+  margin: 0 auto;
+  background: $color1 url(../images/logo.png) no-repeat 0 center;
+  position: relative;
+}
+
+#header-panel #logo-panel .content > a {
+  width: 210px;
+  height: 84px;
+  display: block;
+}
+
+#header-panel #logo-panel .content {
+  > .title {
+    display: block;
+    color: $color2;
+    font-size: 27px;
+    font-weight: bold;
+    left: 220px;
+    height: 40px;
+    line-height: 40px;
+    border-left: 2px solid $color2;
+    padding-left: 14px;
+    top: 23px;
+  }
+
+  > .nav-panel {
+    right: 0;
+
+    > li {
+      float: left;
+      margin-left: 3em;
+
+      &.active {
+        > a {
+          color: $color2;
+        }
+      }
+
+      > a {
+        color: $color3;
+        height: 84px;
+        line-height: 84px;
+        font-weight: bold;
+
+        &:hover {
+          color: $color2;
+        }
+      }
+    }
+  }
+}
