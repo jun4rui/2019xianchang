@@ -1,4 +1,24 @@
 <link rel="stylesheet" href="css/header.css">
+<script>
+  //动态修改登录链接，给backurl加上返回地址
+  $(document).ready(function() {
+    var _href = window.location.href;
+    $('#person-login').attr('href', $('#person-login').attr('href') + _href);
+    $('#company-login').attr('href', $('#company-login').attr('href') + _href);
+  });
+
+  //TODO 检查是否有返回的enCompanyId或者enPersonId，并执行对应的处理
+  //个人登录后的处理流程
+  var _enPersonId = getParameterValue(window.location.href, 'enPersonId').trim();
+  var _enCompanyId = getParameterValue(window.location.href, 'enCompanyId').trim();
+  if (_enPersonId) {
+    window.sessionStorage.setItem('enPersonId', _enPersonId);
+  }
+  //企业登录后的处理流程
+  if (_enCompanyId) {
+    window.sessionStorage.setItem('enCompanyId', _enCompanyId);
+  }
+</script>
 
 <!--Header区域-->
 <div id="header-panel">
@@ -7,13 +27,13 @@
         <!--注册登录容器-->
         <ul class="content">
             <li>
-                <a href="https://qz.hnrcsc.com/pweb/#/login">个人登录</a>
+                <a id="person-login" href="https://qz.hnrcsc.com/pweb/#/login?register=3&backurl=">个人登录</a>
             </li>
             <li>
-                <a href="https://qz.hnrcsc.com/pweb/#/login?register=1">企业登录</a>
+                <a id="company-login" href="https://qz.hnrcsc.com/pweb/#/login?register=1&backurl=">企业登录</a>
             </li>
             <li>
-                <a href="https://qz.hnrcsc.com/pweb/#/login?register=0">注册</a>
+                <a href="https://qz.hnrcsc.com/pweb/#/login?register=0" target="_blank">注册</a>
             </li>
         </ul>
         <!--~注册登录容器-->
@@ -45,8 +65,8 @@
     <!--~标题LOGO-->
 </div>
 <script>
-    if (typeof(_PAGE_INDEX)==='number'){
-        $('.nav-panel li').eq(_PAGE_INDEX).addClass('active');
-    }
+  if (typeof (_PAGE_INDEX) === 'number') {
+    $('.nav-panel li').eq(_PAGE_INDEX).addClass('active');
+  }
 </script>
 <!--~Header区域-->
